@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"slices"
 )
 
@@ -74,6 +75,8 @@ func main() {
 
 	q, item := q.Dequeue()
 	fmt.Println(item)
+
+	fmt.Println(reflect.TypeOf(q))
 
 	var nums []int = []int{-2, 1, -3, 4, -1, 2, 1, -5, 4}
 	for i := 1; i < len(nums); i++ {
