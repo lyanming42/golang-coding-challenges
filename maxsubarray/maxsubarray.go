@@ -5,6 +5,20 @@ import (
 	"slices"
 )
 
+type stack []int
+
+func (s stack) Push(v int) stack {
+	return append(s, v)
+}
+
+func (s stack) Pop() (stack, int) {
+	l := len(s)
+	if l == 0 {
+		return s, 0
+	}
+	return s[:l-1], s[l-1]
+}
+
 type Person struct {
 	name   string
 	age    int
@@ -30,6 +44,13 @@ func factorial_recursion(x float64) (y float64) {
 
 func main() {
 	const PI = 3.14
+
+	s := make(stack, 0)
+
+	s = s.Push(10)
+	s = s.Push(11)
+
+	fmt.Println(s[0])
 
 	var nums []int = []int{-2, 1, -3, 4, -1, 2, 1, -5, 4}
 	for i := 1; i < len(nums); i++ {
@@ -70,4 +91,6 @@ func main() {
 
 	fmt.Println(myslice)
 	fmt.Println(copiedNumbers)
+
+	fmt.Println(&nums)
 }
