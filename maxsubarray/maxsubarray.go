@@ -19,6 +19,20 @@ func (s stack) Pop() (stack, int) {
 	return s[:l-1], s[l-1]
 }
 
+type queue []int
+
+func (q queue) Enqueue(v int) queue {
+	return append(q, v)
+}
+
+func (q queue) Dequeue() (queue, int) {
+	l := len(q)
+	if l == 0 {
+		return q, 0
+	}
+	return q[1:], q[0]
+}
+
 type Person struct {
 	name   string
 	age    int
@@ -50,7 +64,16 @@ func main() {
 	s = s.Push(10)
 	s = s.Push(11)
 
-	fmt.Println(s[0])
+	s, p := s.Pop()
+	fmt.Println(p)
+
+	q := make(queue, 0)
+
+	q = q.Enqueue(10)
+	q = q.Enqueue(10)
+
+	q, item := q.Dequeue()
+	fmt.Println(item)
 
 	var nums []int = []int{-2, 1, -3, 4, -1, 2, 1, -5, 4}
 	for i := 1; i < len(nums); i++ {
