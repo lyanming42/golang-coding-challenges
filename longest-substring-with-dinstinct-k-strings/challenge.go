@@ -15,19 +15,31 @@ func getUniqueChs(chmap map[int]int) int {
 }
 
 func main() {
-	var s string = "abcdeffg"
+	var s string = "aabbcc"
 	var chmap map[int]int = map[int]int{0: 0}
 
 	for i := int('a'); i <= int('z'); i++ {
 		chmap[i] = 0
 	}
 
-	fmt.Println(getUniqueChs(chmap))
-
-	left, right := 0, 0
+	k := 1
+	left, right, res := 0, 0, 0
 
 	for ; right < len(s); right++ {
-		fmt.Println(s[right])
-		left++
+		chmap[int(s[right])] = chmap[int(s[right])] + 1
+		if getUniqueChs(chmap) == k {
+			if res < (right - left + 1) {
+				res = right - left + 1
+			}
+		}
+		for ; getUniqueChs(chmap) > k && left <= right; left++ {
+			chmap[int(s[left])] = chmap[int(s[left])] - 1
+		}
+		if getUniqueChs(chmap) == k {
+			if res < (right - left + 1) {
+				res = right - left + 1
+			}
+		}
 	}
+	fmt.Println(res)
 }
