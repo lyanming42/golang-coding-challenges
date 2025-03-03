@@ -4,38 +4,22 @@ import (
 	"fmt"
 )
 
-func getUniqueChs(chmap map[int]int) int {
-	cnt := 0
-	for i := int('a'); i <= int('z'); i++ {
-		if chmap[i] > 0 {
-			cnt++
-		}
-	}
-	return cnt
-}
-
 func main() {
-	var s string = "aabbcc"
-	var chmap map[int]int = map[int]int{0: 0}
+	var s string = "aabbbcc"
+	var chmap map[int]int = make(map[int]int)
 
-	for i := int('a'); i <= int('z'); i++ {
-		chmap[i] = 0
-	}
-
-	k := 1
+	k := 2
 	left, right, res := 0, 0, 0
 
 	for ; right < len(s); right++ {
-		chmap[int(s[right])] = chmap[int(s[right])] + 1
-		if getUniqueChs(chmap) == k {
-			if res < (right - left + 1) {
-				res = right - left + 1
+		chmap[int(s[right])]++
+		for ; len(chmap) > k && left <= right; left++ {
+			chmap[int(s[left])]--
+			if chmap[int(s[left])] == 0 {
+				delete(chmap, int(s[left]))
 			}
 		}
-		for ; getUniqueChs(chmap) > k && left <= right; left++ {
-			chmap[int(s[left])] = chmap[int(s[left])] - 1
-		}
-		if getUniqueChs(chmap) == k {
+		if len(chmap) == k {
 			if res < (right - left + 1) {
 				res = right - left + 1
 			}
