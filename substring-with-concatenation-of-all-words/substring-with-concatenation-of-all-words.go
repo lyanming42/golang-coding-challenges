@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 /*
 1 <= s.length <= 10^4
 1 <= words.length <= 5000
@@ -19,13 +15,15 @@ func main() {
 	wordLen, totalWorldLen := len(words[0]), len(words[0])*len(words)
 
 	result := make([]int, 0)
+	end := totalWorldLen
 
-	for start := 0; start < len(s); start++ {
+	for _, word := range words {
+		dict[word]++
+	}
+
+	for ; end < len(s); end += wordLen {
 		for _, word := range words {
 			dict[word] = 0
-		}
-		for _, word := range words {
-			dict[word]++
 		}
 
 		wordsUnmatched := 0
@@ -40,10 +38,8 @@ func main() {
 		for _, word := range words {
 			wordsUnmatched += dict[word]
 		}
-		fmt.Println(dict)
 		if wordsUnmatched == 0 {
 			result = append(result, start)
 		}
 	}
-	fmt.Println(result)
 }
