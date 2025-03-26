@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func Abs(x int) int {
 	if x > 0 {
 		return x
@@ -11,36 +13,21 @@ func Abs(x int) int {
 func main() {
 	nums := []int{-4, -1, 0, 3, 10}
 
-	result := make([]int, 0)
+	result := make([]int, len(nums))
 
-	firstPositiveIdx := len(nums)
+	left := 0
+	right := len(nums) - 1
 
-	for idx, num := range nums {
-		if num >= 0 {
-			firstPositiveIdx = idx
-			break
-		}
-	}
-
-	left := firstPositiveIdx - 1
-	right := firstPositiveIdx
-
-	for right < len(nums) && left >= 0 {
-		if nums[right] < Abs(nums[left]) {
-			result = append(result, nums[right]*nums[right])
-			right++
-
+	for i := len(nums) - 1; i >= 0; i-- {
+		rightSq := nums[right] * nums[right]
+		leftSq := nums[left] * nums[left]
+		if rightSq >= leftSq {
+			result[i] = rightSq
+			right--
 		} else {
-			result = append(result, nums[left]*nums[left])
-			left--
+			result[i] = leftSq
+			left++
 		}
 	}
-	for ; left >= 0; left-- {
-		result = append(result, nums[left]*nums[left])
-	}
-
-	for ; right < len(nums); right++ {
-		result = append(result, nums[right]*nums[right])
-	}
-
+	fmt.Println(result)
 }
